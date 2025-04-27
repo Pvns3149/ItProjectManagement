@@ -39,12 +39,22 @@ app.post('/claim-voucher', (req, res) => {
         }
 
         if (results.length > 0) {
+            // Update the 'completed' field to TRUE if found
+            const updateQuery = `UPDATE Redeem SET completed = TRUE WHERE serial_No = ?`;
 
-            return res.json({
-                title: results[0].voucher_name,
-                desc: results[0].voucher_desc
+            connection.query(updateQuery, [serialNo], (updateErr) => {
+                //update check
+                if (updateErr) {
+                    console.error('Error updating the database:', updateErr);
+                    return res.status(500).json({ title: 'Database update error', desc: '' });
+                }
+
+                // Send the voucher details as a response
+                return res.json({
+                    title: results[0].voucher_name,
+                    desc: results[0].voucher_desc
+                });
             });
-
         } else {
             return res.json({ title: 'No unclaimed voucher found with the given serial number.', desc: '' });
         }
