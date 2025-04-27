@@ -30,7 +30,7 @@ app.post('/claim-voucher', (req, res) => {
         SELECT Voucher.voucher_name, Voucher.voucher_desc, Redeem.completed
         FROM Redeem
         INNER JOIN Voucher ON Redeem.voucher_Id = Voucher.voucher_Id
-        WHERE Redeem.serial_No = ?`;
+        WHERE Redeem.completed=FALSE && Redeem.serial_No = ?`;
 
     connection.query(query, [serialNo], (err, results) => {
         if (err) {
@@ -39,18 +39,17 @@ app.post('/claim-voucher', (req, res) => {
         }
 
         if (results.length > 0) {
-            if (results[0].completed) {
-                return res.json({ title: 'This voucher has already been redeemed.', desc: '' });
-            } else {
-                return res.json({
-                    title: results[0].voucher_name,
-                    desc: results[0].voucher_desc
-                });
-            }
+
+            return res.json({
+                title: results[0].voucher_name,
+                desc: results[0].voucher_desc
+            });
+
         } else {
-            return res.json({ title: 'No voucher found with the given serial number.', desc: '' });
+            return res.json({ title: 'No unclaimed voucher found with the given serial number.', desc: '' });
         }
     });
+    
 });
 
 // Start the server
