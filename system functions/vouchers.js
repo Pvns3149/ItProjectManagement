@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    //use temporary id for testing
-    const id = 1; 
+    // //use temporary id for testing
+    // const id = 1; 
 
-    // //get id from session storage
-    // const id = sessionStorage.getItem('Token');
+    //get id from session storage
+    const id = sessionStorage.getItem('Token');
     
     //server funciton call
     fetch('http://localhost:3000/history', {
