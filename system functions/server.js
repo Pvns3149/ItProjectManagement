@@ -22,6 +22,8 @@ const connection = mysql.createConnection({
 });
 
 // Fetch Endpoints
+
+//Vendor claim
 app.post('/claim-voucher', (req, res) => {
     const { serialNo } = req.body;
 
@@ -62,10 +64,14 @@ app.post('/claim-voucher', (req, res) => {
     
 });
 
+//Customer login
 app.post('/auth', (req, res) => {
     const { phoneNum, password } = req.body;
 
-    const query = ` SELECT cust_Id FROM Customer WHERE phone_number = ? AND password = ? `;
+    const query = ` 
+    SELECT cust_Id 
+    FROM Customer 
+    WHERE phone_number = ? AND password = ? `;
 
     connection.query(query, [phoneNum, password], (err, results) => {
         if (err) {
@@ -77,6 +83,31 @@ app.post('/auth', (req, res) => {
             return res.status(200).json({ id: results[0] });
         } else {
             return res.status(401).json({id: null });
+        }
+    });
+});
+
+//Customer voucher history
+app.post('/history', (req, res) => {
+
+    const { id } = req.body;
+
+    const query = `
+    SELECT Voucher.voucher_name, Voucher.voucher_desc, Redeem.completed, Redeem.serial_No, Redeem.trans_Date
+    FROM Redeem 
+    INNER JOIN Voucher ON Redeem.voucher_Id = Voucher.voucher_Id
+    WHERE Redeem.cust_Id = ?`
+
+    connection.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error querying the database:', err);
+            return res.status(500).json({ results: null });
+        }
+
+        if (results.length > 0) {
+            return res.status(200).json({ results });
+        } else {
+            return res.status(200).json({ results: null });
         }
     });
 });
