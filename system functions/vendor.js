@@ -1,7 +1,7 @@
 function claimVoucher() {
 
     //prompt user for voucher serial number
-    const serialNo = prompt('Please enter the voucher serial number:');
+    const serialNo = document.getElementById('serial_num').value;
 
     //server function call
     fetch('http://localhost:3000/claim-voucher', {
@@ -14,8 +14,7 @@ function claimVoucher() {
     //process response
         .then(response => response.json())
         .then(data => {
-            document.getElementById("name").innerHTML = data.title;
-            document.getElementById("desc").innerHTML = data.desc;
+            alert(`${data.title}\n${data.desc}`);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -23,3 +22,10 @@ function claimVoucher() {
             document.getElementById("desc").innerHTML = '';
         });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('vendorForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        claimVoucher();
+    });
+});

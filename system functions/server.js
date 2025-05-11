@@ -64,7 +64,6 @@ app.post('/claim-voucher', (req, res) => {
 
 app.post('/auth', (req, res) => {
     const { phoneNum, password } = req.body;
-    console.log(phoneNum, password);
 
     const query = ` SELECT cust_Id FROM Customer WHERE phone_number = ? AND password = ? `;
 

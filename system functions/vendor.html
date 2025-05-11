@@ -3,12 +3,32 @@
 <head>
 <title>Vendor Page</title>
 <meta charset="utf-8">
-<style>p{color:blue;}</style>
-<script src="vendor.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="login.css">
+<!-- <style>p{color:blue;}</style> -->
+
 </head>
 <body>
- <button onclick="claimVoucher()">Claim Voucher</button><br>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Welcome</h1>
+            <p>Please enter the serial number to claim the rewards</p>
+        </div>
+        
+        <form id="vendorForm">
+            <div class="form-group">
+                <label for="serial_num">Serial Number</label>
+                <input type="int" id="serial_num" name="serial_number" placeholder="Enter the serial number" required>
+            </div>
+            <button type="submit">Redeem</button>
+            
+        </form>
+        
+        <div class="footer">FlyDreamAir ©</div>
+    </div>
+    <script src="vendor.js"></script>
+ <!-- <button onclick="claimVoucher()">Claim Voucher</button><br>
  <p id="name"></p>
- <p id="desc"></p>
+ <p id="desc"></p> -->
 </body>
 </html>
