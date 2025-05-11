@@ -143,8 +143,39 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            window.location.href = 'dashboard.html';
+            //Get form data
+            const pNum = document.getElementById('phone_number').value;
+            const pass = document.getElementById('password').value;
+            console.log(pNum, pass);
+
+            //Process form data
+            fetch('http://localhost:3000/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ phoneNum: pNum, password: pass })
+            })
+            //process response
+            .then(response => response.json()
+            .then(data=>{
+                if (response.status === 200) {
+                    alert('Login successful!');
+                    sessionStorage.setItem('Token', data.id); 
+                    window.location.href = 'dashboard.html';
+                } else if (response.status === 401) {
+                    alert('Login failed. Invalid credentials entered.');
+                } else {
+                    alert('Login failed. Server error. Please try again later.');
+                }
+            }))
+            //error handling
+            .catch(err => {
+                console.error('Error:', err);
+                alert('An error has occured.');
+            });
         });
+
     </script>
 </body>
 </html>

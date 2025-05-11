@@ -4,16 +4,15 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-//function constants
 const app = express();
 const port = 3000;
 
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
 
-app.use(cors()); // Enable CORS for all routes
+app.use(cors()); 
 
-// Create a connection to the database
+// Create a connection to the db
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -22,7 +21,7 @@ const connection = mysql.createConnection({
     port: 3306
 });
 
-// Endpoints
+// Fetch Endpoints
 app.post('/claim-voucher', (req, res) => {
     const { serialNo } = req.body;
 
@@ -33,6 +32,7 @@ app.post('/claim-voucher', (req, res) => {
         WHERE Redeem.completed=FALSE && Redeem.serial_No = ?`;
 
     connection.query(query, [serialNo], (err, results) => {
+        // Db error check
         if (err) {
             console.error('Error querying the database:', err);
             return res.status(500).json({ title: 'Database error', desc: '' });
@@ -43,7 +43,7 @@ app.post('/claim-voucher', (req, res) => {
             const updateQuery = `UPDATE Redeem SET completed = TRUE WHERE serial_No = ?`;
 
             connection.query(updateQuery, [serialNo], (updateErr) => {
-                //update check
+                //update error check
                 if (updateErr) {
                     console.error('Error updating the database:', updateErr);
                     return res.status(500).json({ title: 'Database update error', desc: '' });
@@ -60,6 +60,26 @@ app.post('/claim-voucher', (req, res) => {
         }
     });
     
+});
+
+app.post('/auth', (req, res) => {
+    const { phoneNum, password } = req.body;
+    console.log(phoneNum, password);
+
+    const query = ` SELECT cust_Id FROM Customer WHERE phone_number = ? AND password = ? `;
+
+    connection.query(query, [phoneNum, password], (err, results) => {
+        if (err) {
+            console.error('Error querying the database:', err);
+            return res.status(500).json({id: null });
+        }
+
+        if (results.length > 0) {
+            return res.status(200).json({ id: results[0] });
+        } else {
+            return res.status(401).json({id: null });
+        }
+    });
 });
 
 // Start the server
