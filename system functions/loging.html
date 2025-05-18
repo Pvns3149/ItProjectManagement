@@ -54,7 +54,8 @@
             .then(data=>{
                 if (response.status === 200) {
                     alert('Login successful!');
-                    sessionStorage.setItem('Token', data.id); 
+                    sessionStorage.setItem('User', data.id); 
+                    sessionStorage.setItem('Points', data.points);
                     window.location.href = 'dashboard.html';
                 } else if (response.status === 401) {
                     alert('Login failed. Invalid credentials entered.');

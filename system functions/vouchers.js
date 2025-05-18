@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // const id = 1; 
 
     //get id from session storage
-    const id = sessionStorage.getItem('Token');
+    const id = sessionStorage.getItem('User');
     
     //server funciton call
     fetch('http://localhost:3000/history', {

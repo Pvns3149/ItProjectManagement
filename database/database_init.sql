@@ -31,7 +31,7 @@ CREATE TABLE Redeem (
     cust_Id INT NOT NULL,
     trans_Date DATE NOT NULL DEFAULT CURRENT_DATE,
     completed BOOLEAN NOT NULL DEFAULT FALSE,
-    serial_No INT NOT NULL,
+    serial_No VARCHAR(36) NOT NULL,
     FOREIGN KEY (voucher_Id) REFERENCES Voucher(voucher_Id),
     FOREIGN KEY (cust_Id) REFERENCES Customer(cust_Id)
 );
