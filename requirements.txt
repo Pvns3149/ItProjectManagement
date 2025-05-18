@@ -1,5 +1,8 @@
+#run "npm install $(cat requirements.txt)" to install all dependencies
+
 express
 uuid
 mysql
 body-parser
 cors
+
