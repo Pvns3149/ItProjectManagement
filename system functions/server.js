@@ -3,6 +3,7 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const port = 3000;
@@ -12,7 +13,7 @@ app.use(bodyParser.json());
 
 app.use(cors()); 
 
-// Create a connection to the db
+// Create a connection to the db 
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -64,6 +65,43 @@ app.post('/claim-voucher', (req, res) => {
     
 });
 
+//Customer Claim
+app.post('/redeem', (req, res) => {
+    const { cost, id, voucherId } = req.body;
+
+    const pointsQuery = `
+        UPDATE Customer
+        SET points = points - ?
+        WHERE cust_Id = ?`;
+
+    const redeemQuery = `
+        INSERT INTO Redeem (cust_Id, voucher_Id, serial_No)
+        VALUES (?, ?, ?)`;
+                
+    connection.query(pointsQuery, [ cost, id ], (err, results) => {
+        if (err) {
+            console.error('Error querying the database:', err);
+            return res.status(500).json({ message: 'Database update points error' });
+        }
+        if (results.affectedRows > 0) {
+
+            connection.query(redeemQuery, [ id, voucherId, uuidv4() ], (err, results) => {
+                if (err) {
+                    console.error('Error querying the database:', err);
+                    return res.status(500).json({ message: 'Database create redeemed voucher error' });
+                }
+                if (results.affectedRows > 0) {
+                    return res.status(200).json({ message: 'Voucher redeemed successfully!' });
+                } else {
+                    return res.status(500).json({ message: 'Error creating redeemed voucher' });
+                }
+            });
+        }
+        else 
+            return res.status(400).json({ message: 'Error updating points.' });
+    });
+});
+
 //Customer login
 app.post('/auth', (req, res) => {
     const { phoneNum, password } = req.body;
@@ -99,6 +137,26 @@ app.post('/history', (req, res) => {
     WHERE Redeem.cust_Id = ?`
 
     connection.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error querying the database:', err);
+            return res.status(500).json({ results: null });
+        }
+
+        if (results.length > 0) {
+            return res.status(200).json({ results });
+        } else {
+            return res.status(200).json({ results: null });
+        }
+    });
+});
+
+//Store
+app.get('/store', (req, res) => {
+
+    const query = `
+    SELECT * FROM Voucher`;
+
+    connection.query(query, (err, results) => {
         if (err) {
             console.error('Error querying the database:', err);
             return res.status(500).json({ results: null });

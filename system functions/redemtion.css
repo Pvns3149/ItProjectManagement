@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redeem Points | Rewards System</title>
-    <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #eef2f3;
@@ -65,23 +58,3 @@
         .voucher-card button:hover {
             background-color: #2746b2;
         }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Redeem Your Points</h1>
-
-        <div class="voucher-grid">
-            <!-- Placeholder block, will be repeated dynamically later -->
-            <div class="voucher-card">
-                <h2>{{voucher_name}}</h2>
-                <p>{{voucher_desc}}</p>
-                <div class="cost">{{cost}} Points</div>
-                <button>Redeem</button>
-            </div>
-
-            <!-- More voucher-card blocks will be generated from DB -->
-        </div>
-    </div>
-</body>
-</html>
