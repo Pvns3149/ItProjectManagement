@@ -1,0 +1,5 @@
+express
+uuid
+mysql
+body-parser
+cors

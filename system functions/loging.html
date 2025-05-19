@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Rewards System</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Glad to have you back</h1>
+            <p>Sign in to access your rewards</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="tel" id="phone_number" name="phone_number" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Login</button>
+            
+            <div class="login-options">
+                <a href="#">Forgot password?</a>
+                <a href="#">Sign Up</a>
+            </div>
+        </form>
+        
+        <div class="footer">FlyDreamAir ©</div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            //Get form data
+            const pNum = document.getElementById('phone_number').value;
+            const pass = document.getElementById('password').value;
+
+            //Process form data
+            fetch('http://localhost:3000/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ phoneNum: pNum, password: pass })
+            })
+            //process response
+            .then(response => response.json()
+            .then(data=>{
+                if (response.status === 200) {
+                    alert('Login successful!');
+                    sessionStorage.setItem('User', data.id); 
+                    sessionStorage.setItem('Points', data.points);
+                    window.location.href = 'dashboard.html';
+                } else if (response.status === 401) {
+                    alert('Login failed. Invalid credentials entered.');
+                } else {
+                    alert('Login failed. Server error. Please try again later.');
+                }
+            }))
+            //error handling
+            .catch(err => {
+                console.error('Error:', err);
+                alert('An error has occured.');
+            });
+        });
+
+    </script>
+</body>
+</html>
