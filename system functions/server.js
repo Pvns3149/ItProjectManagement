@@ -136,7 +136,7 @@ app.post('/history', (req, res) => {
     INNER JOIN Voucher ON Redeem.voucher_Id = Voucher.voucher_Id
     WHERE Redeem.cust_Id = ?`
 
-    connection.query(query, [id], (err, results) => {
+    connection.query(query, [ id ], (err, results) => {
         if (err) {
             console.error('Error querying the database:', err);
             return res.status(500).json({ results: null });
@@ -166,6 +166,29 @@ app.get('/store', (req, res) => {
             return res.status(200).json({ results });
         } else {
             return res.status(200).json({ results: null });
+        }
+    });
+});
+
+//Dashboard
+app.post('/dashboard', (req, res) => {
+    const { id } = req.body;
+
+    const query = `
+    SELECT name, points
+    FROM Customer
+    WHERE cust_Id = ?`;
+
+    connection.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error querying the database:', err);
+            return res.status(500).json({ results: "Server error" });
+        }
+
+        if (results.length > 0) {
+            return res.status(200).json({ results });
+        } else {
+            return res.status(500).json({ results: "Customer ID not found" });
         }
     });
 });

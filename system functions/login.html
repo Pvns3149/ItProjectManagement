@@ -25,8 +25,8 @@
             <button type="submit">Login</button>
             
             <div class="login-options">
-                <a href="#">Forgot password?</a>
-                <a href="#">Sign Up</a>
+                If you have forgotten your password or need assistance, please contact our customer service representative at 000000000.<br><br>
+                Thank you
             </div>
         </form>
         
@@ -53,9 +53,8 @@
             .then(response => response.json()
             .then(data=>{
                 if (response.status === 200) {
-                    alert('Login successful!');
-                    sessionStorage.setItem('User', data.id); 
-                    sessionStorage.setItem('Points', data.points);
+                    alert('Login successful! ');
+                    sessionStorage.setItem('User', data.id.cust_Id); 
                     window.location.href = 'dashboard.html';
                 } else if (response.status === 401) {
                     alert('Login failed. Invalid credentials entered.');

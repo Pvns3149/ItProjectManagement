@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //get id from session storage
     const id = sessionStorage.getItem('User');
+
+    //check if id is null and reroute
+    if (id == null) {
+        alert('Session expired. Please login again.');
+        window.location.href = 'login.html';
+    }
     
     //server funciton call
     fetch('http://localhost:3000/history', {
