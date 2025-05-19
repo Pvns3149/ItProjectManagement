@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Dashboard | Rewards System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f4f4;
@@ -65,27 +58,3 @@
             margin-bottom: 0.5rem;
             color: #4361ee;
         }
-    </style>
-</head>
-<body>
-    <div class="dashboard-container">
-        <h1>Welcome, <span>{{customer_name}}</span></h1>
-
-        <div class="points-box">
-            <p>Your current points:</p>
-            <h2>{{customer_points}}</h2>
-        </div>
-
-        <div class="links">
-            <a href="vouchers.html" class="link-card">
-                <i class="fas fa-ticket-alt"></i>
-                <p>My Vouchers</p>
-            </a>
-            <a href="redemption.html" class="link-card">
-                <i class="fas fa-gift"></i>
-                <p>Redeem Points</p>
-            </a>
-        </div>
-    </div>
-</body>
-

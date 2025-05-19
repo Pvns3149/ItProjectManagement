@@ -1,12 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    //use temporary id and points for testing
-    let points = 6100; 
-    const id = 1;
+    // //use temporary id and points for testing
+    // let points = 6100; 
+    // const id = 1;
 
-    // //get points and id from session storage
-    // const points = Number(sessionStorage.getItem('Points'));
-    // id = sessionStorage.getItem('User');
+    //get points and id from session storage
+    let points = Number(sessionStorage.getItem('Points'));
+    id = sessionStorage.getItem('User');
+
+    //check if id is null and reroute
+    if (id == null) {
+        alert('Session expired. Please login again.');
+        window.location.href = 'login.html';
+    }
     
     //server funciton call
     fetch('http://localhost:3000/store')
