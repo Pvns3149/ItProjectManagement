@@ -58,3 +58,14 @@
         .voucher-card button:hover {
             background-color: #2746b2;
         }
+
+        .back-button {
+            margin: 2rem 0;
+            margin-left: 2rem;
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
