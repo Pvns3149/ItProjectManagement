@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard | Rewards System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .points-box {
+            background-color: #4361ee;
+            color: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+        }
+
+        .points-box h2 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .link-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: #2c3e50;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .link-card i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #4361ee;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome, <span>{{customer_name}}</span></h1>
+
+        <div class="points-box">
+            <p>Your current points:</p>
+            <h2>{{customer_points}}</h2>
+        </div>
+
+        <div class="links">
+            <a href="vouchers.html" class="link-card">
+                <i class="fas fa-ticket-alt"></i>
+                <p>My Vouchers</p>
+            </a>
+            <a href="redemption.html" class="link-card">
+                <i class="fas fa-gift"></i>
+                <p>Redeem Points</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
