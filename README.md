@@ -22,3 +22,5 @@ How to run:
 3. modify database connection details in server.js and run database
 4. cd into "system functions" and run "node server.js"
 5. open the html documents.
+
+note: vendor.html is seperate from the other html files.
